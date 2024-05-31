@@ -1,1 +1,2 @@
-echo "flask\nflask-cors" > requirements.txt
+flask
+flask-cors
