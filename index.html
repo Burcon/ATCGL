@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web File Uploader</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>Upload File</h1>
+    <input type="file" id="fileInput">
+    <button id="uploadBtn">Upload</button>
+    <div id="message"></div>
+
+    <script>
+        document.getElementById('uploadBtn').addEventListener('click', () => {
+            const fileInput = document.getElementById('fileInput')
+            const file = fileInput.files[0]
+
+            if (file) {
+                const formData = new FormData()
+                formData.append('file', file)
+
+                axios.post('/api/upload', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                })
+                .then(response => {
+                    document.getElementById('message').innerText = response.data.message
+                })
+                .catch(error => {
+                    console.error('There was an error uploading the file!', error)
+                })
+            } else {
+                alert('Please select a file first')
+            }
+        })
+    </script>
+</body>
+</html>
